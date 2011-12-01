@@ -1,4 +1,8 @@
 from django.db import models
+from PIL import Image
+from StringIO import StringIO
+from django.core.files.base import ContentFile
+import os
 
 class Departements(models.model):
     """
@@ -82,3 +86,41 @@ class Photos(models.model):
     """
     photo = models.ImageField(upload_to='annonces_photos/%d'%self.id, blank=True)
     annonces = models.ForeignKey('Annonces')
+    def updateContent(field, name, img, fmt="JPEG"):
+        fp = StringIO()
+        img.save(fp, fmt, quality=128)
+        cf = ContentFile(fp.getvalue())
+        if field:
+            os.remove(field.path)
+            field.save(name=name, content=cf, save=False)
+
+    #area tuple = left, upper, right, lower coordinates
+    def save(self, area=CROP_SIZE, crop=False, noResizing=False):
+        if noResizing:
+            super(Photos, self).save()
+            return
+
+        imgFile = Image.open(self.photo.path)
+        fmt = imgFile.format
+
+        #Convert to RGB
+        if imgFile.mode not in ('L', 'RGB'):
+            imgFile = imgFile.convert('RGB')
+
+        # make sure photo doesn't exceed our max photo size for the site
+        resizeImg = imgFile.copy()
+        resizeImg.thumbnail(MAX_PHOTO_SIZE, Image.ANTIALIAS)
+        updateContent(self.photo, self.photo.name, resizeImg, fmt)
+
+        thumbImg = imgFile.copy()
+        if crop:
+            thumbImg = thumbImg.crop(area)
+            thumbImg.load()
+            thumbImg = thumbImg.resize(THUMBNAIL_SIZE, Image.ANTIALIAS)
+        else:
+            thumbImg.thumbnail(THUMBNAIL_SIZE, Image.ANTIALIAS)
+
+        updateContent(self.thumbnail, self.photo.name, thumbImg, fmt)
+
+        super(Photo, self).save()
+

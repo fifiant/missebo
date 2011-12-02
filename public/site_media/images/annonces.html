@@ -55,11 +55,20 @@
 							<tr>
 								<td>
 								<input id="baseurl" type="text">
-								<select id="search_category" class="search_category" onchange="SearchCrit(false, get_radio_value(f.st), 17, 's');" name="c"></select>
-								<select id="search_dep" class="search_category" onchange="SearchCrit(false, get_radio_value(f.st), 17, 's');" name="c"></select>
+								<select id="search_category" class="search_category" onchange="SearchCrit(false, get_radio_value(f.st), 17, 's');" name="c"></select>&nbsp<select id="search_dep" class="search_category" onchange="SearchCrit(false, get_radio_value(f.st), 17, 's');" name="c"></select>
 								<button class="btn primary" onclick="sentEvent('TestDomain','Foo', fooevent, 'post');">
 									Chercher
 								</button></td>
+							</tr>
+							<tr>
+								<td>
+								<input id="ctitle" type="checkbox" value="1" name="it"> Recherche dans le titre uniquement  
+								</td>
+							</tr>
+							<tr>
+								<td>
+								<input id="ctitle" type="checkbox" value="1" name="it1"> Annonces urgentes Annonce urgente uniquement
+								</td>
 							</tr>
 						</tbody>
 					</table>

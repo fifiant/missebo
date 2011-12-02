@@ -84,6 +84,7 @@ class Photos(models.model):
     """
     Les photos des annonces
     """
+    name = models.CharField(max_length=255)
     photo = models.ImageField(upload_to='annonces_photos/%d'%self.id, blank=True)
     annonces = models.ForeignKey('Annonces')
     def updateContent(field, name, img, fmt="JPEG"):

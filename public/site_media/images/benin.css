@@ -1,0 +1,10 @@
+.myButtonLink {
+	display: block;
+	width: 100px;
+	height: 100px;
+	background: url('carte_benin.png') bottom;
+	text-indent: -99999px;
+}
+.myButtonLink:hover {
+	background-position: 0 0;
+}

@@ -54,8 +54,9 @@
 						<tbody>
 							<tr>
 								<td>
-								<input id="baseurl" class="span8" type="text">
+								<input id="baseurl" type="text">
 								<select id="search_category" class="search_category" onchange="SearchCrit(false, get_radio_value(f.st), 17, 's');" name="c"></select>
+								<select id="search_dep" class="search_category" onchange="SearchCrit(false, get_radio_value(f.st), 17, 's');" name="c"></select>
 								<button class="btn primary" onclick="sentEvent('TestDomain','Foo', fooevent, 'post');">
 									Chercher
 								</button></td>
